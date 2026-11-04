@@ -1,0 +1,26 @@
+{
+  "parity_profiles": 3,
+  "checks": [
+    "keyboard search and tabs",
+    "star ratings and watched sync",
+    "minimum profile validation",
+    "sample profiles do not log films",
+    "genre filtering and 5/10 picks",
+    "rated and watched exclusions",
+    "mark watched and undo",
+    "remove and undo",
+    "watched search, genre and sorting",
+    "duplicate prevention",
+    "manual entries and persistence",
+    "CSV export and escaping",
+    "clear ratings preserves watched history",
+    "use watched films for picks",
+    "legacy storage migration without invented dates",
+    "storage failure warning",
+    "dialog Escape",
+    "title escaping",
+    "desktop and mobile overflow at 1280/390/320"
+  ],
+  "page_errors": [],
+  "status": "passed"
+}

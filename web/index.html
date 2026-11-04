@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f3efe6">
+  <title>Movie Night</title><link rel="stylesheet" href="style.css"><script src="data.js" defer></script><script src="app.js" defer></script>
+</head>
+<body><div class="page">
+  <header class="masthead">
+    <div class="brand"><svg class="brand-mark" viewBox="0 0 36 44" aria-hidden="true"><rect x="1" y="1" width="34" height="42" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 7h3v5H6zm0 12h3v5H6zm0 12h3v5H6zm21-24h3v5h-3zm0 12h3v5h-3zm0 12h3v5h-3z" fill="currentColor"/><path d="m15 15 9 7-9 7z" fill="currentColor"/></svg><div><h1>Movie Night<span class="title-dot">.</span></h1><p>Find your next film. Keep track of the ones you've seen.</p></div></div>
+    <nav class="view-tabs" role="tablist" aria-label="Movie Night views"><button id="find-tab" type="button" role="tab" aria-selected="true" aria-controls="finder-panel">Find a film</button><button id="watched-tab" type="button" role="tab" aria-selected="false" aria-controls="watched-panel">Watched <span id="watched-nav-count" class="tab-count">0</span></button></nav>
+  </header>
+  <p id="load-status" role="status">Opening the movie catalog…</p><p id="storage-warning" class="storage-warning" role="alert" hidden>Your browser couldn't save the latest change. Export your watched list before closing the page.</p><noscript>This picker needs JavaScript enabled.</noscript>
+  <main id="workspace" hidden>
+    <section id="finder-panel" class="finder-layout" role="tabpanel" aria-labelledby="find-tab">
+      <section class="profile" aria-labelledby="profile-title">
+        <div class="section-heading"><h2 id="profile-title">Your taste</h2><button id="reset" class="text-button" type="button">Clear ratings</button></div>
+        <p class="muted profile-intro">Start with 3 films. A mix of likes and dislikes helps.</p>
+        <label for="movie-search">Add a movie you've seen</label><div class="search-wrap"><input id="movie-search" type="search" placeholder="Try The Matrix…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="search-results"><ul id="search-results" class="search-results" role="listbox" hidden></ul></div>
+        <div id="examples" class="examples"><span>Just looking? Try a sample taste:</span><div id="example-buttons"></div></div>
+        <div id="rated-movies"></div><p id="profile-status" class="muted" aria-live="polite"></p>
+        <button id="recommend" class="primary" type="button" disabled>Find my next film <span aria-hidden="true">→</span></button>
+        <p class="small muted profile-note">Rating a film also adds it to Watched. Sample profiles don't change your log.</p>
+      </section>
+      <section class="recommendations" aria-labelledby="results-title">
+        <div class="results-heading"><div><p class="section-label">For your next movie night</p><h2 id="results-title">Something to watch</h2></div><span class="small muted">A few good options.</span></div>
+        <div class="filters"><div><label for="genre">In the mood for</label><select id="genre"><option value="">Any genre</option></select></div><div><label for="result-count">Picks</label><select id="result-count"><option value="5">5</option><option value="10">10</option></select></div></div>
+        <div id="result-status" class="result-status" role="status" aria-live="polite"></div><ol id="recommendation-list"></ol>
+      </section>
+    </section>
+    <section id="watched-panel" role="tabpanel" aria-labelledby="watched-tab" hidden>
+      <div class="log-heading"><div><p class="section-label">The films you've seen</p><h2>Your watched list</h2><p id="watched-summary" class="muted"></p></div><button id="export-watched" class="secondary" type="button" disabled>Export CSV <span aria-hidden="true">↓</span></button></div>
+      <div class="log-add"><div><label for="watched-add-search">Add a watched film</label><div class="search-wrap"><input id="watched-add-search" type="search" placeholder="Search the catalog…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="watched-add-results"><ul id="watched-add-results" class="search-results" role="listbox" hidden></ul></div></div><button id="manual-add" class="text-button" type="button">Can't find it? Add manually</button></div>
+      <div class="log-filters"><div><label for="watched-filter">Search your list</label><input id="watched-filter" type="search" placeholder="Filter by title…"></div><div><label for="watched-genre">Genre</label><select id="watched-genre"><option value="">All genres</option></select></div><div><label for="watched-sort">Sort</label><select id="watched-sort"><option value="recent">Recently added</option><option value="title">Title, A–Z</option><option value="rating">Your rating</option></select></div></div>
+      <div id="watched-list" aria-live="polite"></div>
+    </section>
+  </main>
+  <details class="about"><summary>About this little project</summary><p>Movie Night compares rating patterns from MovieLens viewers. High ratings support related titles; low ratings reduce that support. Each suggestion names the liked movie contributing the most to it.</p><p>The recommendation catalog uses ratings through 2018. You can add newer or missing titles manually to your watched list. Ratings and watched entries stay in this browser; export the list if you want a backup.</p><p><a href="../EVALUATION.md">Evaluation notes</a> · <a href="../README.md">Code and setup</a></p></details>
+  <footer><span>Movie Night · a personal project</span><span>Data from <a href="https://grouplens.org/datasets/movielens/latest/" target="_blank" rel="noopener noreferrer">MovieLens</a> · <a href="../DATA_LICENSE.txt">Dataset terms</a></span></footer>
+</div>
+<dialog id="manual-dialog" aria-labelledby="manual-title-heading"><form id="manual-form"><div class="section-heading"><h2 id="manual-title-heading">Add a watched film</h2><button id="manual-close" class="close-button" type="button" aria-label="Close">×</button></div><p class="muted">For a film that isn't in the catalog.</p><label for="manual-title">Movie title</label><input id="manual-title" required maxlength="180" placeholder="Past Lives"><div class="dialog-row"><div><label for="manual-year">Year <span class="optional">optional</span></label><input id="manual-year" type="number" min="1888" placeholder="2023"></div><div><label for="manual-genre">Genre <span class="optional">optional</span></label><select id="manual-genre"><option value="">Not set</option></select></div></div><label for="manual-rating">Your rating</label><select id="manual-rating"><option value="0">Not rated yet</option><option value="1">1 — Didn't like it</option><option value="2">2 — Not for me</option><option value="3">3 — It was okay</option><option value="4">4 — Liked it</option><option value="5">5 — Loved it</option></select><div class="dialog-actions"><button class="primary" type="submit">Add to Watched</button></div></form></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden><span id="toast-message"></span><button id="toast-undo" type="button" hidden>Undo</button><button id="toast-close" type="button" aria-label="Dismiss message">×</button></div>
+</body></html>

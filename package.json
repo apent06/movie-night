@@ -1,0 +1,7 @@
+{
+  "name": "movie-night",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": { "test:browser": "node tests/browser_check.cjs" },
+  "devDependencies": { "playwright": "1.62.1" }
+}
